@@ -138,3 +138,6 @@ if DEBUG:
     CSRF_TRUSTED_ORIGINS = [
         'http://localhost:8000',
     ]
+    _suffix = os.environ.get('BASE44_PUBLIC_HOST_SUFFIX')
+    if _suffix:
+        CSRF_TRUSTED_ORIGINS.append('https://3000-' + _suffix)

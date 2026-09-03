@@ -1,0 +1,19 @@
+services:
+  django:
+    image: python:3.11-slim
+    working_dir: /code
+    volumes:
+      - ./app:/code
+    ports:
+      - "3000:8000"
+    environment:
+      - DEBUG=True
+      - BASE44_PUBLIC_HOST_SUFFIX=${BASE44_PUBLIC_HOST_SUFFIX}
+    command: >
+      bash -c "
+      pip install --no-cache-dir -r requirements.txt &&
+      python manage.py collectstatic --noinput &&
+      python manage.py migrate &&
+      python manage.py createsuperauto &&
+      python manage.py runserver 0.0.0.0:8000
+      "
